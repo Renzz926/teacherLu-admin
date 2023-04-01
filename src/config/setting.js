@@ -54,7 +54,7 @@ export const setting = {
   // 标题
   title: '尚书台',
   // 版权信息
-  copyright: '© admin-2021 尚书台',
+  copyright: '© admin-2023 尚书台',
   // 是否显示页面底部自定义版权信息
   footerCopyright: true,
   // 缓存路由的最大数量

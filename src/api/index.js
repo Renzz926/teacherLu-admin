@@ -5,3 +5,10 @@ export const getResouceList = () => {
     method: 'get',
   });
 };
+export function indexApi(params) {
+  return request({
+    url: `/${params.script}`,
+    method: 'post',
+    data: params,
+  });
+}

@@ -50,6 +50,7 @@
     cursor: pointer;
     &:hover {
       background-color: $base-hover-color;
+      color: $base-title-color;
     }
   }
 

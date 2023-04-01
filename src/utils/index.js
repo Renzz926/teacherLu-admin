@@ -1,5 +1,4 @@
 /**
- * @author hu-snail 1217437592@qq.com
  * @description 常用公共工具函数
  */
 
@@ -12,3 +11,9 @@ export const getPageTitle = (pageTitle) => {
   }
   return `${title}`;
 };
+
+//获取图片路径
+export function getSrc(name, type = 'png') {
+  let imgValue = new URL(`/src/assets/${name}.${type}`, import.meta.url).href;
+  return imgValue;
+}
