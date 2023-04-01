@@ -8,7 +8,7 @@
       class="menu-icon"
       v-if="item.children ? item.children[0].meta.icon : item.meta.icon"
       theme="outline"
-      size="14"
+      size="16"
       strokeWidth="3"
       :is="item.children ? item.children[0].meta.icon : item.meta.icon"
     />
@@ -20,24 +20,26 @@
   </el-menu-item>
   <el-sub-menu :class="{ 'is-black': isBlack }" :index="item.path" v-else>
     <template #title>
-      <component
-        class="menu-icon"
-        v-if="item.meta.icon"
-        theme="outline"
-        size="14"
-        strokeWidth="3"
-        :is="item.meta.icon"
-      />
+      <el-icon>
+        <component
+          class="menu-icon"
+          v-if="item.meta.icon"
+          theme="outline"
+          size="16"
+          strokeWidth="3"
+          :is="item.meta.icon"
+        />
+      </el-icon>
       <span class="title">{{ item.meta.title }}</span>
     </template>
     <template v-for="(option, index) in item.children">
-      <menu-item v-if="option.children" :key="option.path" :item="option" />
+      <el-menu-item v-if="option.children" :key="option.path" :item="option" />
       <el-menu-item v-else :index="option.path" :key="index">
         <component
           class="menu-icon"
           v-if="option.meta.icon"
           theme="outline"
-          size="14"
+          size="16"
           strokeWidth="3"
           :is="option.meta.icon"
         />
@@ -50,52 +52,52 @@
 </template>
 
 <script>
-  export default {
-    name: 'MenuItem',
-  };
+export default {
+  name: 'MenuItem',
+};
 </script>
 
 <script setup>
-  import { computed } from 'vue';
-  import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-  import { themeConfig } from '@/config/theme';
-  const { themeOptions } = themeConfig;
+import { themeConfig } from '@/config/theme';
+const { themeOptions } = themeConfig;
 
-  const whiteColors = ['#fff', '#ffffff', '#FFF', '#FFF', 'rgb(255, 255, 255)'];
+const whiteColors = ['#fff', '#ffffff', '#FFF', '#FFF', 'rgb(255, 255, 255)'];
 
-  defineProps({
-    item: {
-      type: Object,
-      default: () => {
-        return {};
-      },
+defineProps({
+  item: {
+    type: Object,
+    default: () => {
+      return {};
     },
-  });
+  },
+});
 
-  const store = useStore();
+const store = useStore();
 
-  const theme = computed(() => {
-    return store.getters['setting/theme'];
-  });
+const theme = computed(() => {
+  return store.getters['setting/theme'];
+});
 
-  const menuBgColor = computed(() => {
-    return themeOptions[theme.value].menuBgColor;
-  });
+const menuBgColor = computed(() => {
+  return themeOptions[theme.value].menuBgColor;
+});
 
-  const isBlack = computed(() => {
-    return whiteColors.indexOf(menuBgColor.value) === -1;
-  });
+const isBlack = computed(() => {
+  return whiteColors.indexOf(menuBgColor.value) === -1;
+});
 </script>
 <style lang="scss" scoped>
-  .menu-icon,
-  .icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: $base-icon-width-big !important;
-    height: $base-icon-height-super-max !important;
-    margin-right: $base-margin-5;
-    visibility: initial !important;
-  }
+.menu-icon,
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $base-icon-width-big !important;
+  height: $base-icon-height-super-max !important;
+  margin-right: $base-margin-5;
+  visibility: initial !important;
+}
 </style>
