@@ -10,7 +10,7 @@
             theme="filled"
             size="16"
             :strokeWidth="4"
-            fill="#666"
+            fill="#f5f5f5"
             @click="handleCollapse"
           />
           <template v-if="isBreadcrumb">

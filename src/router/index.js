@@ -47,91 +47,143 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/comp',
+    path: '/fileManager',
     component: Layout,
-    name: 'Comp',
-    meta: { title: global.t('route.components'), icon: 'icon-code' },
+    name: 'File',
+    meta: { title: '文件管理', icon: 'icon-form-one' },
     children: [
       {
-        path: '/element',
-        name: 'ElementComp',
-        component: () => import('@/views/element/index.vue'),
+        path: '/fileManager/allfile',
+        name: 'AllFile',
+        component: () => import('@/views/FileManager/allfile.vue'),
         meta: {
-          title: global.t('route.eleComponents'),
-          icon: 'icon-code',
+          title: '全文件管理',
+          icon: 'icon-data-file',
         },
       },
       {
-        path: '/iconPark',
-        name: 'IconPark',
-        component: () => import('@/views/icon/index.vue'),
+        path: '/fileManager/yinzhou',
+        name: 'Yinzhou',
+        component: () => import('@/views/FileManager/yinzhou.vue'),
         meta: {
-          title: global.t('route.icons'),
-          icon: 'icon-like',
+          title: '鄞州房屋初始化',
+          icon: 'icon-green-house',
         },
       },
       {
-        path: '/chart',
-        name: 'Chart',
-        component: () => import('@/views/echarts/index.vue'),
+        path: '/fileManager/renfang',
+        name: 'Renfang',
+        component: () => import('@/views/FileManager/renfang.vue'),
         meta: {
-          title: global.t('route.charts'),
-          icon: 'icon-chart-line',
+          title: '人房关系',
+          icon: 'icon-relational-graph',
         },
-        children: [
-          {
-            path: '/line',
-            name: 'Line',
-            component: () => import('@/views/echarts/line.vue'),
-            meta: {
-              title: global.t('route.lineChart'),
-            },
-          },
-          {
-            path: '/bar',
-            name: 'Bar',
-            component: () => import('@/views/echarts/bar.vue'),
-            meta: {
-              title: global.t('route.barChart'),
-            },
-          },
-          {
-            path: '/otherChart',
-            name: 'OtherChart',
-            component: () => import('@/views/echarts/other.vue'),
-            meta: {
-              title: global.t('route.mixedChart'),
-            },
-          },
-        ],
+      },
+      {
+        path: '/fileManager/qidi',
+        name: 'Qidi',
+        component: () => import('@/views/FileManager/qidi.vue'),
+        meta: {
+          title: '企地关系',
+          icon: 'icon-transform',
+        },
       },
     ],
   },
   {
-    path: '/errorPage',
-    name: 'ErrorPage',
+    path: '/dataManager',
     component: Layout,
-    meta: {
-      title: global.t('route.errorPages'),
-      icon: 'icon-link-cloud-faild',
-    },
+    name: 'Data',
+    meta: { title: '元数据管理', icon: 'icon-adjacent-item' },
     children: [
       {
-        path: '/404Page',
-        name: '404Page',
-        component: () => import('@/views/errorPage/404.vue'),
+        path: '/dataManager/table',
+        name: 'table',
+        component: () => import('@/views/dataManager/table.vue'),
         meta: {
-          title: global.t('route.page404'),
-          icon: 'icon-link-cloud-faild',
+          title: 'dw信息',
+          icon: 'icon-analysis',
         },
       },
       {
-        path: '/401Page',
-        name: '401Page',
-        component: () => import('@/views/errorPage/401.vue'),
+        path: '/dataManager/gb4754',
+        name: 'gb4754',
+        component: () => import('@/views/dataManager/gb4754.vue'),
         meta: {
-          title: global.t('route.page401'),
-          icon: 'icon-link-interrupt',
+          title: '经济行业分类',
+          icon: 'icon-dollar',
+        },
+      },
+      {
+        path: '/dataManager/education_code',
+        name: 'education_code',
+        component: () => import('@/views/dataManager/education_code.vue'),
+        meta: {
+          title: '教育厅码值',
+          icon: 'icon-treasure-chest',
+        },
+      },
+      {
+        path: '/dataManager/social_insurance_code',
+        name: 'social_insurance_code',
+        component: () => import('@/views/dataManager/social_insurance_code.vue'),
+        meta: {
+          title: '社保缴纳码值',
+          icon: 'icon-transform',
+        },
+      },
+      {
+        path: '/dataManager/region',
+        name: 'region',
+        component: () => import('@/views/dataManager/region.vue'),
+        meta: {
+          title: '地域纬度管理',
+          icon: 'icon-chart-line-area',
+        },
+      },
+      {
+        path: '/dataManager/alias',
+        name: 'alias',
+        component: () => import('@/views/dataManager/alias.vue'),
+        meta: {
+          title: '别名维护',
+          icon: 'icon-curve-adjustment',
+        },
+      },
+    ],
+  },
+  {
+    path: '/relationship',
+    component: Layout,
+    redirect: '/relationship/index',
+    name: 'Relationship',
+    children: [
+      {
+        path: '/relationship/index',
+        name: 'RelationshipIndex',
+        component: () => import('../views/Relationship/index.vue'),
+        meta: {
+          title: '关系图谱',
+          icon: 'icon-move-in',
+          noKeepAlive: true,
+        },
+      },
+    ],
+  },
+  {
+    path: '/search',
+    component: Layout,
+    redirect: '/search/index',
+    name: 'Search',
+    children: [
+      {
+        path: '/search/index',
+        name: 'SearchIndex',
+        component: () => import('../views/Search/index.vue'),
+        meta: {
+          title: '搜索',
+          icon: 'icon-search',
+          noKeepAlive: true,
         },
       },
     ],

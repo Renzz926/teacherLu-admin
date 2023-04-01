@@ -1,6 +1,6 @@
 <template>
   <div class="right-panel">
-    <icon-theme
+    <!-- <icon-theme
       class="icon-hover theme"
       :title="t('navbar.theme')"
       theme="outline"
@@ -8,7 +8,7 @@
       size="16"
       :fill="color"
       @click="handleChangeTheme"
-    />
+    /> -->
     <!-- <el-popover v-if="settings.notice" placement="bottom" :width="320" trigger="hover">
       <template #reference>
         <icon-remind
@@ -43,7 +43,7 @@
       :strokeWidth="4"
     />
     <Avatar :color="color" />
-    <ThemeSetting />
+    <!-- <ThemeSetting /> -->
   </div>
 </template>
 
@@ -67,7 +67,7 @@
   defineProps({
     color: {
       type: String,
-      default: '#666',
+      default: '#f5f5f5',
     },
   });
 
