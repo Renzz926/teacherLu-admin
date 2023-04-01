@@ -25,6 +25,7 @@ const getters = {
   accessToken: (state) => state.accessToken,
   username: (state) => state.username,
   avatar: (state) => state.avatar,
+  roles: (state) => state.roles,
   permissions: (state) => {
     return state.permissions;
   },
@@ -42,9 +43,6 @@ const mutations = {
   },
   setPermissions(state, permissions) {
     state.permissions = permissions;
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles;
   },
   SET_TOKEN: (state, token) => {
     state.token = token;

@@ -29,10 +29,6 @@ router.beforeEach(async (to, from, next) => {
     } else {
       const hasPermissions =
         store.getters['user/permissions'] && store.getters['user/permissions'].length > 0;
-      console.log(
-        `🍎 🚀 🏆 ~~~ router.beforeEach ~~~ hasPermissions:`,
-        store.getters['user/permissions']
-      );
       if (hasPermissions) {
         next();
       } else {
