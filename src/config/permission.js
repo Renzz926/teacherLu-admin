@@ -24,13 +24,13 @@ router.beforeEach(async (to, from, next) => {
 
   if (hasToken) {
     if (to.path === '/login') {
-      next({ path: '/' });
       if (progressBar) NProgress.done();
+      return next({ path: '/' });
     } else {
       const hasPermissions =
         store.getters['user/permissions'] && store.getters['user/permissions'].length > 0;
       if (hasPermissions) {
-        next();
+        return next();
       } else {
         try {
           let permissions;
@@ -51,7 +51,7 @@ router.beforeEach(async (to, from, next) => {
           accessRoutes.forEach((item) => {
             router.addRoute(item);
           });
-          next({ ...to, replace: true });
+          return next({ ...to, replace: true });
         } catch {
           await store.dispatch('user/resetAccessToken');
           if (progressBar) NProgress.done();
@@ -61,14 +61,14 @@ router.beforeEach(async (to, from, next) => {
   } else {
     // 免登录路由
     if (routesWhiteList.indexOf(to.path) !== -1) {
-      next();
+      return next();
     } else {
-      if (recordRoute) {
-        next(`/login?redirect=${to.path}`);
-      } else {
-        next('/login');
-      }
       if (progressBar) NProgress.done();
+      if (recordRoute) {
+        return next(`/login?redirect=${to.path}`);
+      } else {
+        return next('/login');
+      }
     }
   }
   document.title = getPageTitle(to.meta.title);

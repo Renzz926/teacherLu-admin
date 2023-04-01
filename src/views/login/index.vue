@@ -14,7 +14,7 @@
       </div>
       <div class="login-form" :class="{ 'is-mobile': isMobile }">
         <div class="form-warp">
-          <div class="tit">尚书台</div>
+          <div class="tit">登录</div>
           <LoginForm />
           <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
           <!-- <el-tab-pane :label="t('login.title')" name="first"> </el-tab-pane> -->

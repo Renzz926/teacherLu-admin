@@ -96,21 +96,17 @@ const actions = {
       return false;
     }
     const user = res.user;
-    // const avatar =
-    //   user.avatar == ''
-    //     ? require('@/assets/images/profile.jpg')
-    //     : process.env.VUE_APP_BASE_API + user.avatar;
-    if (res.roles && res.roles.length > 0) {
-      // 验证返回的roles是否是一个非空数组
+    if (res.roles && user.userName && Array.isArray(res.roles)) {
       commit('SET_ROLES', res.roles);
       commit('SET_PERMISSIONS', res.roles);
       commit('setPermissions', res.roles);
+      commit('SET_NAME', user.userName);
+      // commit('SET_AVATAR', avatar);
+      return res.roles;
     } else {
-      commit('SET_ROLES', ['ROLE_DEFAULT']);
+      ElMessage.error('用户信息接口异常');
+      return false;
     }
-    commit('SET_NAME', user.userName);
-    commit('SET_AVATAR', avatar);
-    return res.roles;
   },
   async logout({ dispatch }) {
     // await logout(state.accessToken);

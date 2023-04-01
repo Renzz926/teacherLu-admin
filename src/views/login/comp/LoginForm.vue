@@ -168,6 +168,9 @@
 <style lang="scss" scoped>
   .login-ruleForm {
     margin-top: 1rem;
+    :deep(.el-input__inner) {
+      color: #000;
+    }
     :deep(.el-input__prefix) {
       top: 2px;
       padding: 0 4px;
