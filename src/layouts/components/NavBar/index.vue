@@ -66,7 +66,7 @@
     padding-right: $base-padding;
     overflow: hidden;
     user-select: none;
-    background: $base-color-white;
+    background: $base-color-black;
     box-shadow: $base-box-shadow;
     .left-panel {
       display: flex;

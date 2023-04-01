@@ -29,6 +29,7 @@
     "echarts": "^5.1.2",
     "element-plus": "^2.2.5",
     "js-cookie": "^3.0.1",
+    "jsencrypt": "^3.3.2",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",

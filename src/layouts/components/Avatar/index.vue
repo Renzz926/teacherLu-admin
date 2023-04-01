@@ -59,7 +59,7 @@
   };
 
   const handleLogout = () => {
-    ElMessageBox.confirm(`${t('confirm.msg')}${title}？`, t('confirm.title'), {
+    ElMessageBox.confirm(`${t('confirm.msg')}？`, t('confirm.title'), {
       confirmButtonText: t('btn.confirm'),
       cancelButtonText: t('btn.cancel'),
       dangerouslyUseHTMLString: true,

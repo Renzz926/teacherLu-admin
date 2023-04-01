@@ -77,6 +77,7 @@
       }
     }
     .main {
+      padding-top: 0;
       position: relative;
       top: $base-main-vertical-top;
       overflow-y: auto;

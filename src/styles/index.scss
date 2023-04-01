@@ -1,4 +1,17 @@
 @import './common.scss';
 @import './reset.scss';
 @import './variable.scss';
-@import './element-reset.scss'
+@import './element-reset.scss';
+
+:deep(.el-card) {
+  border: none;
+  background:#2a2b36;
+  box-shadow:none;
+}
+:deep(.el-card__header) {
+  border-bottom: none;
+}
+
+html.dark{
+  --el-color-primary: #4763E4 !important;
+}

@@ -23,7 +23,7 @@ $base-z-index-default: 99;
 // hover基础样式
 $base-hover-color: #f5f5f5;
 // 中间内容背景
-$base-content-bg-color: #f1f2f5;
+$base-content-bg-color: #3A3A44;
 // 标题颜色
 $base-title-color: #fff;
 // 深色背景
@@ -57,7 +57,7 @@ $base-avatar-height: 40px;
 // 底部copyright高度
 $footer-copyright-height: 55px;
 // 内容最低高度
-$app-main-min-height: calc(100vh - 140px);
+$app-main-min-height: calc(100vh - 200px);
 
 // top
 // 移动端内容距顶部高度
@@ -102,7 +102,7 @@ $base-icon-height-super-max: 50px;
 // 字体颜色
 $base-font-color: #606266;
 $base-color-6: #666666;
-$base-color-3: #333333;
+$base-color-3: #ECEBEB;
 $base-color-blue: $base-color-primary;
 $base-color-green: #91cc75;
 $base-color-white: #fff;

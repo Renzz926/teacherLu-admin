@@ -5,8 +5,9 @@ import './config/permission';
 
 // element
 import 'element-plus/theme-chalk/display.css';
-// import 'element-plus/theme-chalk/dark/css-vars.css';
+import 'element-plus/theme-chalk/dark/css-vars.css';
 import App from './App.vue';
+import '../public/fonts/fonts.css';
 const app = createApp(App);
 
 import { VueClipboard } from '@soerenmartius/vue3-clipboard';

@@ -316,8 +316,8 @@
     padding-right: $base-padding;
     padding-left: $base-padding;
     user-select: none;
-    background: $base-color-white;
-    border-top: 1px solid #f6f6f6;
+    background: '#3A3A44';
+    // border-top: 1px solid #f6f6f6;
     &.horizontal {
       padding: 0 40px;
     }

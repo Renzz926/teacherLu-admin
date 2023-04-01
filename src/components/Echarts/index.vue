@@ -1,25 +1,5 @@
 <template>
-  <el-card class="echart-card" shadow="hover">
-    <template #header>
-      <div class="card-header">
-        <div class="card-header-title">
-          <component
-            class="icon"
-            :is="headerIcon"
-            theme="filled"
-            size="16"
-            :strokeWidth="3"
-            fill="#333"
-          />
-          <span class="title">{{ title }}</span>
-        </div>
-        <div class="card-header-right">
-          <slot name="header-right"></slot>
-        </div>
-      </div>
-    </template>
-    <div class="echarts" :id="`echarts${index}`" :style="style"> </div>
-  </el-card>
+  <div class="echarts" :id="`echarts${index}`" :style="style"> </div>
 </template>
 
 <script setup>
@@ -81,7 +61,7 @@
     },
     title: {
       type: String,
-      default: '标题',
+      default: '',
     },
     headerIcon: {
       type: String,

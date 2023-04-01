@@ -19,9 +19,25 @@
         </template>
       </el-input>
     </el-form-item>
+    <el-form-item prop="code">
+      <el-input
+        v-model="ruleForm.code"
+        auto-complete="off"
+        placeholder="验证码"
+        style="width: 63%"
+        @keyup.enter="handleLogin"
+      >
+        <template #prefix>
+          <icon-protect theme="outline" size="16" fill="#999" />
+        </template>
+      </el-input>
+      <div class="login-code">
+        <img :src="codeUrl" @click="getCode" class="login-code-img" />
+      </div>
+    </el-form-item>
     <el-form-item>
       <div class="login-check">
-        <el-checkbox v-model="checkedPwd">{{ t('login.rememberPwd') }}</el-checkbox>
+        <el-checkbox v-model="ruleForm.rememberMe">{{ t('login.rememberPwd') }}</el-checkbox>
         <!-- <el-button text type="primary">{{ t('login.forgotPwd') }}</el-button> -->
       </div>
     </el-form-item>
@@ -44,27 +60,34 @@
 </template>
 
 <script>
-  import { reactive, toRefs, ref, unref, watch } from 'vue';
+  import { reactive, toRefs, ref, unref, watch, onMounted } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
+  import { getCodeImg, login } from '@/api/login';
   import { useI18n } from 'vue-i18n';
+  import Cookies from 'js-cookie';
+  import { encrypt, decrypt } from '@/utils/jsencrypt';
   export default {
     setup() {
       const { t } = useI18n();
       const store = useStore();
       const router = useRouter();
       const validateForm = ref(null);
+      const codeUrl = ref(null);
       const state = reactive({
         ruleForm: {
-          username: 'admin',
-          password: 'admin',
+          username: '',
+          password: '',
+          code: '',
+          uuid: '',
+          rememberMe: false,
         },
         loading: false,
-        checkedPwd: false,
         redirect: undefined,
         rules: {
           username: [{ required: true, message: t('login.rules.username'), trigger: 'blur' }],
           password: [{ required: true, message: t('login.rules.password'), trigger: 'blur' }],
+          code: [{ required: true, trigger: 'change', message: '请输入验证码' }],
         },
       });
 
@@ -79,6 +102,22 @@
         }
       );
 
+      const getCode = () => {
+        getCodeImg().then((res) => {
+          codeUrl.value = 'data:image/gif;base64,' + res.img;
+          state.ruleForm.uuid = res.uuid;
+        });
+      };
+      const getCookie = () => {
+        const username = Cookies.get('username');
+        const password = Cookies.get('password');
+        const rememberMe = Cookies.get('rememberMe');
+        state.ruleForm = {
+          username: username === undefined ? state.ruleForm.username : username,
+          password: password === undefined ? state.ruleForm.password : decrypt(password),
+          rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
+        };
+      };
       const handleLogin = async () => {
         const form = unref(validateForm);
         if (!form) return;
@@ -86,24 +125,42 @@
           if (valid) {
             state.valid = true;
             state.loading = true;
+            if (state.ruleForm.rememberMe) {
+              Cookies.set('username', state.ruleForm.username, { expires: 30 });
+              Cookies.set('password', encrypt(state.ruleForm.password), { expires: 30 });
+              Cookies.set('rememberMe', state.ruleForm.rememberMe, { expires: 30 });
+            } else {
+              Cookies.remove('username');
+              Cookies.remove('password');
+              Cookies.remove('rememberMe');
+            }
             store
               .dispatch('user/login', state.ruleForm)
               .then(() => {
                 const routerPath =
                   state.redirect === '/404' || state.redirect === '/401' ? '/' : state.redirect;
-                router.push(routerPath).catch(() => {});
+                console.log('xixix', routerPath);
+                router.push(routerPath);
                 state.loading = false;
               })
               .catch(() => {
                 state.loading = false;
+                getCode();
               });
           }
         });
       };
+
+      onMounted(() => {
+        getCode();
+        getCookie();
+      });
       return {
         ...toRefs(state),
         validateForm,
         handleLogin,
+        getCode,
+        codeUrl,
         t,
       };
     },
@@ -130,6 +187,17 @@
       display: flex;
       align-content: center;
       justify-content: space-between;
+    }
+    .login-code {
+      width: 34%;
+      height: 38px;
+      float: right;
+      img {
+        cursor: pointer;
+        vertical-align: middle;
+        height: 38px;
+        margin-left: 30px;
+      }
     }
   }
 </style>

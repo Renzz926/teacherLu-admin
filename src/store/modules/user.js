@@ -15,13 +15,19 @@ const state = {
   username: '',
   avatar: '',
   permissions: [],
+  name: '',
+  roles: [],
+  token: getAccessToken(),
 };
 
 const getters = {
+  token: (state) => state.token,
   accessToken: (state) => state.accessToken,
   username: (state) => state.username,
   avatar: (state) => state.avatar,
-  permissions: (state) => state.permissions,
+  permissions: (state) => {
+    return state.permissions;
+  },
 };
 const mutations = {
   setAccessToken(state, accessToken) {
@@ -37,14 +43,32 @@ const mutations = {
   setPermissions(state, permissions) {
     state.permissions = permissions;
   },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles;
+  },
+  SET_TOKEN: (state, token) => {
+    state.token = token;
+  },
+  SET_NAME: (state, name) => {
+    state.name = name;
+  },
+  SET_AVATAR: (state, avatar) => {
+    state.avatar = avatar;
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles;
+  },
+  SET_PERMISSIONS: (state, permissions) => {
+    state.permissions = permissions;
+  },
 };
 const actions = {
   setPermissions({ commit }, permissions) {
     commit('setPermissions', permissions);
   },
   async login({ commit }, userInfo) {
-    const { data } = await login(userInfo);
-    const accessToken = data[tokenName];
+    const res = await login(userInfo);
+    const accessToken = res[tokenName];
     if (accessToken) {
       commit('setAccessToken', accessToken);
       const hour = new Date().getHours();
@@ -68,21 +92,27 @@ const actions = {
     }
   },
   async getUserInfo({ commit, state }) {
-    const { data } = await getUserInfo(state.accessToken);
-    if (!data) {
+    const res = await getUserInfo();
+    if (res.code !== 200) {
       ElMessage.error('验证失败，请重新登录...');
       return false;
     }
-    let { permissions, username, avatar } = data;
-    if (permissions && username && Array.isArray(permissions)) {
-      commit('setPermissions', permissions);
-      commit('setUsername', username);
-      commit('setAvatar', avatar);
-      return permissions;
+    const user = res.user;
+    // const avatar =
+    //   user.avatar == ''
+    //     ? require('@/assets/images/profile.jpg')
+    //     : process.env.VUE_APP_BASE_API + user.avatar;
+    if (res.roles && res.roles.length > 0) {
+      // 验证返回的roles是否是一个非空数组
+      commit('SET_ROLES', res.roles);
+      commit('SET_PERMISSIONS', res.roles);
+      commit('setPermissions', res.roles);
     } else {
-      ElMessage.error('用户信息接口异常');
-      return false;
+      commit('SET_ROLES', ['ROLE_DEFAULT']);
     }
+    commit('SET_NAME', user.userName);
+    commit('SET_AVATAR', avatar);
+    return res.roles;
   },
   async logout({ dispatch }) {
     // await logout(state.accessToken);

@@ -5,7 +5,7 @@
     :class="{ unfold: collapse, horizontal: mode === 'horizontal' }"
   >
     <img class="img" src="@/assets/logo.png" alt="login-bg" />
-    <span class="logo-title" :style="{ color: textColor }" v-if="!collapse"> 管理系统 </span>
+    <span class="logo-title" :style="{ color: textColor }" v-if="!collapse"> 尚书台 </span>
   </div>
 </template>
 
@@ -50,6 +50,8 @@
     align-items: center;
     justify-content: center;
     width: $base-logo-width;
+    background: $base-color-black;
+    height: 60px;
     cursor: pointer;
     .img {
       width: 35px;
@@ -64,6 +66,7 @@
     }
 
     .logo-title {
+      font-family: 'YOUSHE';
       display: inline-block;
       max-width: calc(246px - 60px);
       padding-left: $base-padding-10;

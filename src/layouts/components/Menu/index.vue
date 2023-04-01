@@ -2,7 +2,7 @@
   <el-scrollbar height="100vh">
     <el-menu
       :default-active="defaultActive"
-      :background-color="menuBgColor"
+      background-color="#232431"
       :default-openeds="defaultOpened"
       :unique-opened="uniqueOpenedFlag"
       class="el-menu-vertical"
@@ -120,5 +120,8 @@
     &:not(.el-menu--collapse) {
       width: $base-menu-width;
     }
+  }
+  :deep(.el-menu) {
+    border-right: none !important;
   }
 </style>

@@ -1,98 +1,118 @@
 <template>
   <div class="index-conntainer">
-    <div class="head-card">
-      <div class="avatar">
-        <el-avatar :size="50" :src="avatar"></el-avatar>
-      </div>
-      <div class="head-card-content">
-        <h2 class="title">{{ sayHi }}! Vue3-Admin, {{ t('indexPage.descTitle') }}</h2>
-        <p class="desc">
-          vue3-admin1111 是基于 vue3 + vite2 + Element-Plus + Vue-Router4.x + Vuex4.x +
-          Javascript开发的中后台管理平台，开箱即用！赶快试试吧...
-        </p>
-      </div>
-    </div>
     <div class="content">
-      <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
-          <el-card class="card" shadow="hover">
+      <el-card class="card">
+        <template #header>
+          <h2 class="title">数据模型</h2>
+        </template>
+        <div class="card-body" :class="{ mobile: isMobile }">
+          <div class="tit">数据模型总数： 123</div>
+          <el-row class="modelrow" justify="space-around" :gutter="20">
+            <el-col v-for="(item, index) in modelList" :key="index" :span="4">
+              <div :style="{ background: item.color }" class="modelitem">{{ item.name }}</div>
+            </el-col>
+          </el-row>
+          <el-row justify="space-around" :gutter="20">
+            <el-col :span="4">
+              <div class="overviewitem">
+                <div class="text">数据存储总量</div>
+                <div class="value"><span>10</span>GB</div>
+              </div>
+            </el-col>
+            <el-col class="split1" :span="1">
+              <div class="split"></div>
+            </el-col>
+            <el-col :span="4">
+              <div class="overviewitem">
+                <div class="text">接口服务数量</div> <div class="value"><span>10</span>个</div></div
+              >
+            </el-col>
+            <el-col class="split1" :span="1">
+              <div class="split"></div>
+            </el-col>
+            <el-col :span="4">
+              <div class="overviewitem">
+                <div class="text">接口实时总调用次数</div>
+                <div class="value"><span>10</span></div></div
+              >
+            </el-col>
+            <el-col class="split1" :span="1">
+              <div class="split"></div>
+            </el-col>
+            <el-col :span="4">
+              <div class="overviewitem">
+                <div class="text">支撑项目</div> <div class="value"><span>10</span>个</div></div
+              >
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+          <el-card class="card">
             <template #header>
-              <h3 class="title">{{ t('indexPage.resourceTitle') }}</h3>
+              <h2 class="title">实时接口调用量 top 10</h2>
             </template>
             <div class="card-body" :class="{ mobile: isMobile }">
-              <div
-                class="item"
-                v-for="(item, index) in state.list"
-                @click="handleToDetail(item.url)"
-                :key="index"
-              >
-                <div class="lf">
-                  <!-- <img class="img" :src="`${state.prefix}${item.logo}`" /> -->
-                  <div class="title" v-if="item.title">{{ item.title }}</div>
-                </div>
-                <div class="desc"> {{ item.desc }} </div>
-              </div>
+              <Echarts
+                :index="1"
+                headerIcon="icon-chart-line"
+                :style="{
+                  height: '200px',
+                }"
+                :options="{
+                  series: series2,
+                  xAxis,
+                  yAxis,
+                  toolbox,
+                }"
+              />
             </div>
-          </el-card>
-          <el-card class="card" shadow="hover">
-            <template #header>
-              <h3 class="title">{{ t('indexPage.envTitle') }}</h3>
-            </template>
-            <el-descriptions class="margin-top" :column="3" border>
-              <el-descriptions-item v-for="(value, key) in packpage.dependencies" :key="key">
-                <template #label>
-                  {{ key }}
-                </template>
-                {{ value }}
-              </el-descriptions-item>
-            </el-descriptions>
           </el-card>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-          <el-card class="card" shadow="hover">
+        <el-col :xs="24" :sm="24" :md="24" :lg="10" :xl="10">
+          <el-card class="card">
             <template #header>
-              <h3 class="title">{{ t('indexPage.orderTitle') }}</h3>
+              <h2 class="title">数据分层数量</h2>
             </template>
-            <div class="count-box">
-              <div class="item" v-for="(item, index) in state.orderList" :key="index">
-                <span class="label">{{ t('indexPage.order.' + item.key) }}</span>
-                <CountTo
-                  class="count"
-                  :class="item.status"
-                  :startVal="0"
-                  :endVal="item.value"
-                  :duration="3000"
-                ></CountTo>
-              </div>
+            <div class="card-body" :class="{ mobile: isMobile }">
+              <Echarts
+                :index="1"
+                headerIcon="icon-chart-line"
+                :style="{
+                  height: '200px',
+                }"
+                :options="{
+                  series: series2,
+                  xAxis,
+                  yAxis,
+                  toolbox,
+                }"
+              />
             </div>
           </el-card>
-          <el-card class="card" shadow="hover">
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="7" :xl="7">
+          <el-card class="card">
             <template #header>
-              <h3 class="title">{{ t('indexPage.skillTitle') }}</h3>
+              <h2 class="title">图表1</h2>
             </template>
-            <div v-for="(item, index) in state.skillList" :key="index">
-              <div class="skill-title">{{ item.title }}</div>
-              <el-progress
-                :stroke-width="8"
-                :percentage="item.percentage"
-                :color="item.color"
-              ></el-progress>
+            <div class="card-body" :class="{ mobile: isMobile }">
+              <Echarts
+                :index="1"
+                headerIcon="icon-chart-line"
+                :style="{
+                  height: '200px',
+                }"
+                :options="{
+                  series: series2,
+                  xAxis,
+                  yAxis,
+                  toolbox,
+                }"
+              />
             </div>
           </el-card>
-          <Echarts
-            :title="t('indexPage.chartTitle')"
-            :index="1"
-            headerIcon="icon-chart-line"
-            :style="{
-              height: '200px',
-            }"
-            :options="{
-              series: series2,
-              xAxis,
-              yAxis,
-              toolbox,
-            }"
-          />
         </el-col>
       </el-row>
     </div>
@@ -111,34 +131,14 @@
   import { CountTo } from 'vue3-count-to';
   import Echarts from '@/components/Echarts/index.vue';
 
-  import packpage from '../../../package.json';
   import { useI18n } from 'vue-i18n';
-  import { getResouceList } from '@/api/index';
-
+  import { modelList } from './config';
   import { useStore } from 'vuex';
   const store = useStore();
 
   const { t } = useI18n();
 
-  const state = reactive({
-    list: [],
-    prefix: '',
-    orderList: [],
-    skillList: [],
-  });
-
-  const hour = new Date().getHours();
-  const thisTime =
-    hour < 8
-      ? t('sayHi.early')
-      : hour <= 11
-      ? t('sayHi.morning')
-      : hour <= 13
-      ? t('sayHi.noon')
-      : hour < 18
-      ? t('sayHi.afternoon')
-      : t('sayHi.evening');
-  const sayHi = ref(thisTime);
+  const state = reactive({});
   const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
 
   const series2 = reactive([
@@ -166,39 +166,33 @@
     return store.getters['setting/isMobile'];
   });
 
-  const onGetResouceList = () => {
-    getResouceList().then((res) => {
-      const { list, prefix, orderList, skillList } = res.data;
-      Object.assign(state, { list, prefix, orderList, skillList });
-    });
-  };
-
-  const handleToDetail = (url) => {
-    window.open(url);
-  };
-
-  onBeforeMount(() => {
-    onGetResouceList();
-  });
+  onBeforeMount(() => {});
 </script>
 
 <style lang="scss" scoped>
   .index-conntainer {
     width: $base-width;
-    .head-card {
-      display: flex;
-      align-items: center;
-      padding: $base-main-padding;
-      background-color: $base-color-white;
-      &-content {
+    .content {
+      margin: 16px 0;
+      .tit {
+        position: relative;
         padding-left: 15px;
-        .desc {
-          color: $base-font-color;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25px;
+        margin-bottom: 30px;
+        color: #4763e4;
+        &::before {
+          position: absolute;
+          top: 3px;
+          left: 0px;
+          content: '';
+          width: 3px;
+          height: 16px;
+          background-color: #4763e4;
         }
       }
-    }
-    .content {
-      margin: 15px 0;
+
       .count-box {
         display: flex;
         align-items: center;
@@ -232,50 +226,52 @@
         font-weight: 500;
       }
       .card {
-        margin-bottom: 15px;
+        margin-bottom: 16px;
         &-body {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          &.mobile {
-            grid-template-columns: repeat(1, 1fr);
+          .modelitem {
+            width: 218px;
+            line-height: 90px;
+            height: 90px;
+            text-align: center;
+            border-radius: 2px;
           }
-          .item {
-            box-sizing: border-box;
-            padding: 10px 20px;
-            margin-top: -1px;
-            margin-left: -1px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid black;
-            border: 1px solid #eee;
-            transition: box-shadow 0.5;
-            .lf {
+          .split1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .split {
+            width: 1px;
+            height: 40px;
+            background-color: #6d6d76;
+          }
+          .overviewitem {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            .text {
+              font-size: 16px;
+              color: #aaaaaa;
+              margin-bottom: 20px;
+            }
+            .value {
+              font-size: 16px;
               display: flex;
               align-items: center;
-              max-width: 140px;
-              .img {
-                width: auto;
-                max-width: 120px;
-                height: auto;
-                max-height: 40px;
+              color: #aaaaaa;
+              span {
+                font-size: 32px;
+                line-height: 45px;
+                color: #8da2fb;
               }
-            }
-            &:hover {
-              box-shadow: $base-box-shadow;
-            }
-            .title {
-              padding-left: 5px;
-              font-size: 18px;
-              font-weight: bold;
-            }
-            .desc {
-              padding: 5px 0;
-              font-size: 13px;
-              line-height: 1.5;
-              color: $base-font-color;
             }
           }
         }
+      }
+      .modelrow {
+        margin-bottom: 50px;
       }
     }
   }

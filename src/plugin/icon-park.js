@@ -35,6 +35,7 @@ import {
   Like,
   Xigua,
   Performance,
+  Protect,
   Pic,
   MoveOne,
   Search,
@@ -110,6 +111,7 @@ export const components = [
   ChartHistogram,
   MultiPictureCarousel,
   Theme,
+  Protect,
   Translate,
 ];
 

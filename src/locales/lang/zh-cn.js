@@ -179,7 +179,7 @@ export default {
   },
   confirm: {
     title: '操作提示',
-    msg: '您确定要退出',
+    msg: '您确定注销并退出系统吗',
   },
   btn: {
     confirm: '确定',

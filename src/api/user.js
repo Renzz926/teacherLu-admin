@@ -11,7 +11,7 @@ export const login = async (data) => {
 
 export const getUserInfo = (accessToken) => {
   return request({
-    url: '/userInfo',
+    url: '/getInfo',
     method: 'get',
     data: {
       [tokenName]: accessToken,

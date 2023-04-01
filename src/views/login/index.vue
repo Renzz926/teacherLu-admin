@@ -1,9 +1,9 @@
 <template>
   <div class="login-wrapper">
-    <el-header class="header">
+    <!-- <el-header class="header">
       <Logo class="logo" />
       <LangChange class="lang" color="#fff" />
-    </el-header>
+    </el-header> -->
     <div class="login-container">
       <div class="login-left hidden-sm-and-down">
         <div class="login-left-wrap">
@@ -14,14 +14,14 @@
       </div>
       <div class="login-form" :class="{ 'is-mobile': isMobile }">
         <div class="form-warp">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane :label="t('login.title')" name="first">
-              <LoginForm />
-            </el-tab-pane>
-            <!-- <el-tab-pane :label="t('register.title')" name="second">
+          <div class="tit">尚书台</div>
+          <LoginForm />
+          <!-- <el-tabs v-model="activeName" @tab-click="handleClick"> -->
+          <!-- <el-tab-pane :label="t('login.title')" name="first"> </el-tab-pane> -->
+          <!-- <el-tab-pane :label="t('register.title')" name="second">
               <RegisterForm />
             </el-tab-pane> -->
-          </el-tabs>
+          <!-- </el-tabs> -->
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
   import { ref, computed } from 'vue';
   import { useStore } from 'vuex';
   import LoginForm from 'views/login/comp/LoginForm.vue';
-  import RegisterForm from './comp/RegisterForm.vue';
+  // import RegisterForm from './comp/RegisterForm.vue';
   import LangChange from '@/components/LangChange/index.vue';
   import { useI18n } from 'vue-i18n';
 
@@ -93,7 +93,7 @@
           height: 80vh;
           margin: auto;
           .img {
-            width: 280px;
+            width: 480px;
             margin-top: 10vh;
           }
           .title,
@@ -123,6 +123,11 @@
           margin: auto;
           background-color: #fff;
           border-radius: 8px;
+          .tit {
+            font-size: 34px;
+            text-align: center;
+            font-family: 'YOUSHE';
+          }
         }
         &.is-mobile {
           width: 100%;
