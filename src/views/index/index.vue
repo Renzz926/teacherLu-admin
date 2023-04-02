@@ -407,8 +407,8 @@ onBeforeMount(() => {
       &-body {
         .modelitem {
           position: relative;
-          // width: 218px;
-          height: 90px;
+          height: auto;
+          aspect-ratio: 2.42;
           text-align: center;
           border-radius: 2px;
           .num {
