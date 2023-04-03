@@ -69,7 +69,7 @@
       </el-table>
       <el-pagination
         style="margin-top: 20px"
-        v-if="qiye_list.length > 0 || current > 1"
+        v-if="state.qiye_list.length > 0 || current > 1"
         @current-change="handleCurrentChange"
         :current-page="current"
         :page-size="size"
@@ -81,73 +81,71 @@
     </div>
   </div>
 </template>
-
 <script>
-  import { tagsApi } from '@/api/tags';
-
   export default {
-    name: 'index',
-    data() {
-      return {
-        input1: '',
-        qiye_list: [],
-        current: 1,
-        size: 15,
-        total: 0,
-        show1: false,
-        imgurl: '@assets/',
-      };
-    },
-    created() {
-      this.enterSearch();
-    },
-    methods: {
-      initial() {
-        this.show1 = false;
-        this.input1 = '';
-      },
+    name: 'Search',
+  };
+</script>
+<script setup>
+  import { tagsApi } from '@/api/tags';
+  import { useRouter } from 'vue-router';
+  import { ref, reactive } from 'vue';
 
-      search_qiye() {
-        this.show1 = true;
-        //获取数据的接口
-        tagsApi({
-          script: 'es/qiyebasicinfo',
-          search: this.input1,
-          size: this.size,
-          current: this.current,
-        }).then((res) => {
-          this.qiye_list = res.records;
-          this.total = res.total;
-        });
-      },
-      handleCurrentChange(page) {
-        this.search_qiye();
-      },
-      //回车搜索
-      enterSearch() {
-        document.onkeyup = (e) => {
-          if (e.keyCode === 13) {
-            this.search_qiye();
-          }
-        };
-      },
-      showDetail(row) {
-        this.$router.push({ path: '/relationship/index', query: { uscc: row.uscc } });
-      },
-      showDetail2(row) {
-        this.$router.push({
-          path: '/tags/tagsearch',
-          query: { searchIdcard: row.legal_rep_idcard },
-        });
-        // console.log(row.legal_rep_idcard)
-      },
-    },
+  const router = useRouter();
+  const input1 = ref('');
+  const current = ref(1);
+  const size = ref(15);
+  const total = ref(0);
+  const show1 = ref(false);
+  const state = reactive({
+    qiye_list: [],
+  });
+  //回车搜索
+  const enterSearch = () => {
+    document.onkeyup = (e) => {
+      if (e.keyCode === 13) {
+        search_qiye();
+      }
+    };
+  };
+  enterSearch();
+
+  const initial = () => {
+    show1.value = false;
+    input1.value = '';
+  };
+
+  const search_qiye = () => {
+    show1.value = true;
+    //获取数据的接口
+    tagsApi({
+      script: 'es/qiyebasicinfo',
+      search: input1.value,
+      size: size.value,
+      current: current.value,
+    }).then((res) => {
+      state.qiye_list = res.records;
+      total.value = res.total;
+    });
+  };
+
+  const handleCurrentChange = (page) => {
+    search_qiye();
+  };
+
+  const showDetail = (row) => {
+    router.push({ path: '/relationship/index', query: { uscc: row.uscc } });
+  };
+  const showDetail2 = (row) => {
+    router.push({
+      path: '/tags/tagsearch',
+      query: { searchIdcard: row.legal_rep_idcard },
+    });
   };
 </script>
 
 <style lang="scss" scoped>
   .content {
-    padding-top: 20px;
     box-sizing: border-box;
     .search_index {
       display: flex;

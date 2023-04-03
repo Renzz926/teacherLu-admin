@@ -15,115 +15,110 @@
     >
 
     <div style="height: calc(100vh - 50px)">
-      <RelationGraph
-        ref="seeksRelationGraph"
-        :options="graphOptions"
-        :on-node-click="onNodeClick"
-        :on-line-click="onLineClick"
-      />
+      <relation-graph ref="relationGraph$" :options="options">
+        <template #node="{ node }">
+          <div style="padding-top: 20px">节点：{{ node.text }}</div>
+        </template>
+      </relation-graph>
     </div>
   </div>
 </template>
 
-<script>
-  import RelationGraph from 'relation-graph';
+<script setup>
   import { noderelationship, relationship } from '@/api/relationship';
-  export default {
-    name: 'Demo',
-    components: { RelationGraph },
-    data() {
-      return {
-        graphOptions: {
-          allowSwitchLineShape: false,
-          allowSwitchJunctionPoint: true,
-          defaultJunctionPoint: 'border',
-          allowShowMiniNameFilter: true,
-          // 这里可以参考"Graph 图谱"中的参数进行设置
-        },
-        uscc: '',
-        test1: '',
-        input2: '',
-        select2: [
-          {
-            value: '选项1',
-            label: '职工',
-          },
-          {
-            value: '选项2',
-            label: '高管',
-            disabled: true,
-          },
-          {
-            value: '选项3',
-            label: '股东',
-            disabled: true,
-          },
-          {
-            value: '选项4',
-            label: '法人',
-            disabled: true,
-          },
-          {
-            value: '选项5',
-            label: '全部',
-            disabled: true,
-          },
-        ],
-        value1: '职工',
-        relationship_data: {
-          rootId: 'b',
-          nodes: [
-            { id: 'a', text: '亚瑟', borderColor: 'yellow' },
-            { id: 'b', text: '安琪拉', color: '#43a2f1', fontColor: 'yellow' },
-            { id: 'c', text: '宫本武藏', nodeShape: 1, width: 80, height: 60 },
-            { id: 'e', text: '孙悟空', nodeShape: 0, width: 150, height: 150 },
-          ],
-          links: [
-            { from: 'a', to: 'b', text: '兄弟', color: '#43a2f1' },
-            { from: 'a', to: 'c', text: '敌人' },
-            { from: 'a', to: 'e', text: '基友' },
-            { from: 'b', to: 'e', color: '#67C23A' },
-          ],
-        },
-      };
-    },
-    created() {
-      let test123 = this.$route.query.uscc;
-
-      this.searchRelationship(test123);
-    },
-    mounted() {
-      this.showSeeksGraph();
-    },
-    methods: {
-      showSeeksGraph(query) {
-        this.$refs.seeksRelationGraph.setJsonData(this.relationship_data, (seeksRGGraph) => {
-          // Called when the relation-graph is completed
-        });
-      },
-      onNodeClick(nodeObject, $event) {
-        // this.$router.push({ path: '/tags/tagsearch', query: { searchIdcard: nodeObject.id } });
-      },
-      onLineClick(lineObject, $event) {},
-      searchRelationship(uscc) {
-        let input2 = this.value1;
-        this.relationship_data.rootId = 'b';
-
-        Promise.all([relationship(uscc, input2), noderelationship({ uscc: uscc })])
-          .then(([res, res1]) => {
-            this.relationship_data.links = [];
-            this.relationship_data.links = res.data;
-            this.relationship_data.nodes = [];
-            this.relationship_data.nodes = res1.data;
-          })
-          .then(() => {
-            this.$refs.seeksRelationGraph.setJsonData(this.relationship_data, (seeksRGGraph) => {
-              // Called when the relation-graph is completed
-            });
-          });
-      },
-    },
+  import { ref, reactive, onMounted } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
+  import RelationGraph from 'relation-graph/vue3';
+  const router = useRouter();
+  const route = useRoute();
+  const options = {
+    defaultExpandHolderPosition: 'right',
+    // defaultLineShape: 4,
+    debug: true,
+    showDebugPanel: true,
   };
+  const uscc = ref('');
+  const relationGraph$ = ref(null);
+  const test1 = ref('');
+  const input2 = ref('');
+  const value1 = ref('职工');
+  let select2 = [
+    {
+      value: '选项1',
+      label: '职工',
+    },
+    {
+      value: '选项2',
+      label: '高管',
+      disabled: true,
+    },
+    {
+      value: '选项3',
+      label: '股东',
+      disabled: true,
+    },
+    {
+      value: '选项4',
+      label: '法人',
+      disabled: true,
+    },
+    {
+      value: '选项5',
+      label: '全部',
+      disabled: true,
+    },
+  ];
+  const state = reactive({});
+  let test123 = route.query.uscc;
+
+  const showSeeksGraph = (query) => {
+    const graphJsonData = {
+      rootId: 'N3',
+      nodes: [
+        { id: 'N4', text: '十4' },
+        { id: 'N5', text: '十5' },
+        { id: 'N6', text: '十6' },
+        { id: 'N7', text: '十7' },
+        { id: 'N3', text: '十三' },
+        { id: 'N9', text: '152****3393' },
+      ],
+      lines: [
+        { from: 'N3', to: 'N9', text: '分享' },
+        { from: 'N3', to: 'N4', text: '分享444' },
+        { from: 'N3', to: 'N5', text: '分享555' },
+        { from: 'N3', to: 'N6', text: '分享666' },
+        { from: 'N3', to: 'N7', text: '分享777' },
+        { from: 'N9', to: 'N4', text: '分享x' },
+      ],
+    };
+    relationGraph$.value.setJsonData(graphJsonData, () => {
+      console.log('relationGraph ready!');
+    });
+  };
+  const onNodeClick = (nodeObject, $event) => {
+    router.push({ path: '/tags/tagsearch', query: { searchIdcard: nodeObject.id } });
+  };
+  const searchRelationship = (uscc) => {
+    // let input2 = value1.value;
+    // state.relationship_data.rootId = 'b';
+    // Promise.all([relationship(uscc, input2), noderelationship({ uscc: uscc })])
+    //   .then(([res, res1]) => {
+    //     state.relationship_data.links = [];
+    //     state.relationship_data.links = res.data;
+    //     state.relationship_data.nodes = [];
+    //     state.relationship_data.nodes = res1.data;
+    //   })
+    //   .then(() => {
+    //     seeksRelationGraph.value.setJsonData(state.relationship_data, (seeksRGGraph) => {
+    //       // Called when the relation-graph is completed
+    //     });
+    //   });
+  };
+  searchRelationship(test123);
+
+  onMounted(() => {
+    showSeeksGraph();
+  });
 </script>
 
 <style scoped></style>

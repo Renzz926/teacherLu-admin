@@ -248,7 +248,7 @@
       },
       // 更新解析状态
       updateAnalysis(row) {
-        const fd = new FormData(); //创建FormData对象,
+        let fd = new FormData(); //创建FormData对象,
         fd.append('fileId', row.id);
         fd.append('analysis', row.analysis);
         var timer = setTimeout(() => {
@@ -313,7 +313,7 @@
         if (file.name.split('.')[1] !== 'xlsx' || file.name.split('.')[1] !== 'xlsx') {
           this.$message.error('此页面仅上传xlsx，xls文件');
         } else {
-          const fd = new FormData(); //创建FormData对象,
+          let fd = new FormData(); //创建FormData对象,
           fd.append('file', file);
           fd.append('fileType', 3);
           upload(fd, getToken()).then((res) => {

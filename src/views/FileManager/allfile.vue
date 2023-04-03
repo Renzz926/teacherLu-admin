@@ -217,7 +217,7 @@
       },
       // 更新解析状态
       updateAnalysis(row) {
-        const fd = new FormData(); //创建FormData对象,
+        let fd = new FormData(); //创建FormData对象,
         fd.append('fileId', row.id);
         fd.append('analysis', row.analysis);
         var timer = setTimeout(() => {
@@ -261,7 +261,7 @@
       // 文件上传
       uploadFile(e) {
         const file = e.target.files[0];
-        const fd = new FormData(); //创建FormData对象,
+        let fd = new FormData(); //创建FormData对象,
         fd.append('file', file);
         upload(fd, getToken()).then((res) => {
           this.getList();

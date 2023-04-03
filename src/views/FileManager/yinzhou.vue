@@ -460,7 +460,7 @@
       },
       // 更新解析状态
       updateAnalysis(row) {
-        const fd = new FormData(); //创建FormData对象,
+        let fd = new FormData(); //创建FormData对象,
         fd.append('fileId', row.id);
         fd.append('analysis', row.analysis);
         fd.append('isCsh:', this.isCsh);
