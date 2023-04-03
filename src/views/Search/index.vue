@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div style="width:50%" class="search_index">
+    <div style="width: 50%" class="search_index">
       <el-input class="input1" v-model="input1"></el-input>
       <el-button
         type="primary"
@@ -83,81 +83,84 @@
 </template>
 
 <script>
-import { tagsApi } from '@/api/tags';
+  import { tagsApi } from '@/api/tags';
 
-export default {
-  name: 'index',
-  data() {
-    return {
-      input1: '',
-      qiye_list: [],
-      current: 1,
-      size: 15,
-      total: 0,
-      show1: false,
-      imgurl: '@assets/',
-    };
-  },
-  created() {
-    this.enterSearch();
-  },
-  methods: {
-    initial() {
-      this.show1 = false;
-      this.input1 = '';
-    },
-
-    search_qiye() {
-      this.show1 = true;
-      //获取数据的接口
-      tagsApi({
-        script: 'es/qiyebasicinfo',
-        search: this.input1,
-        size: this.size,
-        current: this.current,
-      }).then((res) => {
-        this.qiye_list = res.records;
-        this.total = res.total;
-      });
-    },
-    handleCurrentChange(page) {
-      this.search_qiye();
-    },
-    //回车搜索
-    enterSearch() {
-      document.onkeyup = (e) => {
-        if (e.keyCode === 13) {
-          this.search_qiye();
-        }
+  export default {
+    name: 'index',
+    data() {
+      return {
+        input1: '',
+        qiye_list: [],
+        current: 1,
+        size: 15,
+        total: 0,
+        show1: false,
+        imgurl: '@assets/',
       };
     },
-    showDetail(row) {
-      this.$router.push({ path: '/relationship/index', query: { uscc: row.uscc } });
+    created() {
+      this.enterSearch();
     },
-    showDetail2(row) {
-      this.$router.push({ path: '/tags/tagsearch', query: { searchIdcard: row.legal_rep_idcard } });
-      // console.log(row.legal_rep_idcard)
+    methods: {
+      initial() {
+        this.show1 = false;
+        this.input1 = '';
+      },
+
+      search_qiye() {
+        this.show1 = true;
+        //获取数据的接口
+        tagsApi({
+          script: 'es/qiyebasicinfo',
+          search: this.input1,
+          size: this.size,
+          current: this.current,
+        }).then((res) => {
+          this.qiye_list = res.records;
+          this.total = res.total;
+        });
+      },
+      handleCurrentChange(page) {
+        this.search_qiye();
+      },
+      //回车搜索
+      enterSearch() {
+        document.onkeyup = (e) => {
+          if (e.keyCode === 13) {
+            this.search_qiye();
+          }
+        };
+      },
+      showDetail(row) {
+        this.$router.push({ path: '/relationship/index', query: { uscc: row.uscc } });
+      },
+      showDetail2(row) {
+        this.$router.push({
+          path: '/tags/tagsearch',
+          query: { searchIdcard: row.legal_rep_idcard },
+        });
+        // console.log(row.legal_rep_idcard)
+      },
     },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.content{
-  padding-top: 20px;
-  box-sizing: border-box;
-  .search_index {
-    display: flex;
+  .content {
+    padding-top: 20px;
+    box-sizing: border-box;
+    .search_index {
+      display: flex;
+    }
+    .input1 {
+      width: 1000px;
+      border-color: #1890ff;
+      border-style: solid;
+    }
+    .downNum {
+      text-decoration: underline;
+      color: #1890ff;
+      cursor: pointer;
+    }
   }
-  .input1 {
-    width: 1000px;
-    border-color: #1890ff;
-    border-style: solid;
-  }
-  .downNum {
-    text-decoration: underline;
-    color: #1890ff;
-    cursor: pointer;
-  }
-}
 </style>

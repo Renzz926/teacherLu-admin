@@ -181,289 +181,289 @@
 </template>
 
 <script>
-export default {
-  name: 'Index',
-};
+  export default {
+    name: 'Index',
+  };
 </script>
 
 <script setup>
-import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { ref, computed, reactive, onBeforeMount } from 'vue';
 
-import { CountTo } from 'vue3-count-to';
-import Echarts from '@/components/Echarts/index.vue';
-import { indexApi } from '@/api/index.js';
-import { useI18n } from 'vue-i18n';
-import { getSrc } from '@/utils';
-import { modelList } from './config';
-import { useStore } from 'vuex';
-const store = useStore();
+  import { CountTo } from 'vue3-count-to';
+  import Echarts from '@/components/Echarts/index.vue';
+  import { indexApi } from '@/api/index.js';
+  import { useI18n } from 'vue-i18n';
+  import { getSrc } from '@/utils';
+  import { modelList } from './config';
+  import { useStore } from 'vuex';
+  const store = useStore();
 
-const { t } = useI18n();
+  const { t } = useI18n();
 
-const state = reactive({
-  jcCount: 0,
-  tagsCount: 0,
-  relationshipCount: 0,
-  dimCount: 0,
-  interfaceCount: 0,
-  indexCount: 0,
-  ProjectRequirementCount: [],
-  ProjectRequirementCountName: [],
-  top10ApiData: [],
-  tableCountOptions: {},
-});
-const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
-const totalCount = ref(0);
-
-// 获取基础模型
-const getJcCount = () => {
-  indexApi({ script: 'index/count/jc' })
-    .then((res) => {
-      state.jcCount = res.data;
-    })
-    .catch((err) => {});
-};
-//获取标签模型
-const getTagsCount = () => {
-  indexApi({ script: 'index/count/tags' })
-    .then((res) => {
-      state.tagsCount = res.data;
-    })
-    .catch((err) => {});
-};
-//获取关系模型
-const getRelationshipCount = () => {
-  indexApi({ script: 'index/count/relationship' })
-    .then((res) => {
-      state.relationshipCount = res.data;
-    })
-    .catch((err) => {});
-};
-//获取维度模型
-const getDimCount = () => {
-  indexApi({ script: 'index/count/dim' })
-    .then((res) => {
-      state.dimCount = res.data;
-    })
-    .catch((err) => {});
-};
-//获取接口数量
-const getInterfaceCount = () => {
-  indexApi({ script: 'index/count/interface' })
-    .then((res) => {
-      state.interfaceCount = res.data;
-    })
-    .catch((err) => {});
-};
-//获取数据模型
-const getIndexCount = () => {
-  indexApi({ script: 'index/count' })
-    .then((res) => {
-      state.indexCount = res.data;
-    })
-    .catch((err) => {});
-};
-//获取总数据量
-const getTotalCount = () => {
-  indexApi({ script: 'index/count/tableData' })
-    .then((res) => {
-      totalCount.value = Math.floor(res.data * 100) / 100;
-    })
-    .catch((err) => {});
-};
-//获取项目需求量 创建图表
-const getProjectRequirementCount = () => {
-  indexApi({ script: 'index/count/projectRequirementCount' }).then(({ data }) => {
-    state.ProjectRequirementCount = data.reverse();
-    //获取原表中所有projectName
-    state.ProjectRequirementCountName = state.ProjectRequirementCount.map(
-      (item) => item.projectName
-    );
+  const state = reactive({
+    jcCount: 0,
+    tagsCount: 0,
+    relationshipCount: 0,
+    dimCount: 0,
+    interfaceCount: 0,
+    indexCount: 0,
+    ProjectRequirementCount: [],
+    ProjectRequirementCountName: [],
+    top10ApiData: [],
+    tableCountOptions: {},
   });
-};
-//获取接口调用前十 创建图表
-const getTop10ApiCount = () => {
-  indexApi({ script: 'index/count/apicountlimit10' }).then((res) => {
-    state.top10ApiData = res.data;
-  });
-};
+  const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
+  const totalCount = ref(0);
 
-//获取各层表数量
-const getTableCount = () => {
-  indexApi({ script: 'index/count/table' }).then((res) => {
-    state.tableCountOptions = {
-      xAxis: {
-        type: 'category',
-        axisLine: { show: false },
-        splitLine: { show: false },
-        data: Object.keys(res.data),
-      },
-      yAxis: {
-        type: 'value',
-        axisLine: { show: false },
-        splitLine: { show: false },
-        axisLabel: { show: false },
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'none',
+  // 获取基础模型
+  const getJcCount = () => {
+    indexApi({ script: 'index/count/jc' })
+      .then((res) => {
+        state.jcCount = res.data;
+      })
+      .catch((err) => {});
+  };
+  //获取标签模型
+  const getTagsCount = () => {
+    indexApi({ script: 'index/count/tags' })
+      .then((res) => {
+        state.tagsCount = res.data;
+      })
+      .catch((err) => {});
+  };
+  //获取关系模型
+  const getRelationshipCount = () => {
+    indexApi({ script: 'index/count/relationship' })
+      .then((res) => {
+        state.relationshipCount = res.data;
+      })
+      .catch((err) => {});
+  };
+  //获取维度模型
+  const getDimCount = () => {
+    indexApi({ script: 'index/count/dim' })
+      .then((res) => {
+        state.dimCount = res.data;
+      })
+      .catch((err) => {});
+  };
+  //获取接口数量
+  const getInterfaceCount = () => {
+    indexApi({ script: 'index/count/interface' })
+      .then((res) => {
+        state.interfaceCount = res.data;
+      })
+      .catch((err) => {});
+  };
+  //获取数据模型
+  const getIndexCount = () => {
+    indexApi({ script: 'index/count' })
+      .then((res) => {
+        state.indexCount = res.data;
+      })
+      .catch((err) => {});
+  };
+  //获取总数据量
+  const getTotalCount = () => {
+    indexApi({ script: 'index/count/tableData' })
+      .then((res) => {
+        totalCount.value = Math.floor(res.data * 100) / 100;
+      })
+      .catch((err) => {});
+  };
+  //获取项目需求量 创建图表
+  const getProjectRequirementCount = () => {
+    indexApi({ script: 'index/count/projectRequirementCount' }).then(({ data }) => {
+      state.ProjectRequirementCount = data.reverse();
+      //获取原表中所有projectName
+      state.ProjectRequirementCountName = state.ProjectRequirementCount.map(
+        (item) => item.projectName
+      );
+    });
+  };
+  //获取接口调用前十 创建图表
+  const getTop10ApiCount = () => {
+    indexApi({ script: 'index/count/apicountlimit10' }).then((res) => {
+      state.top10ApiData = res.data;
+    });
+  };
+
+  //获取各层表数量
+  const getTableCount = () => {
+    indexApi({ script: 'index/count/table' }).then((res) => {
+      state.tableCountOptions = {
+        xAxis: {
+          type: 'category',
+          axisLine: { show: false },
+          splitLine: { show: false },
+          data: Object.keys(res.data),
         },
-      },
-      series: [
-        {
-          data: Object.keys(res.data).map((item) => res.data[item]),
-          type: 'bar',
-          barWidth: 10,
-          itemStyle: {
-            color: 'rgba(205, 163, 67, 0.79)',
+        yAxis: {
+          type: 'value',
+          axisLine: { show: false },
+          splitLine: { show: false },
+          axisLabel: { show: false },
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'none',
           },
         },
-      ],
-    };
+        series: [
+          {
+            data: Object.keys(res.data).map((item) => res.data[item]),
+            type: 'bar',
+            barWidth: 10,
+            itemStyle: {
+              color: 'rgba(205, 163, 67, 0.79)',
+            },
+          },
+        ],
+      };
+    });
+  };
+
+  const yAxis = reactive({
+    type: 'value',
   });
-};
 
-const yAxis = reactive({
-  type: 'value',
-});
+  const isMobile = computed(() => {
+    return store.getters['setting/isMobile'];
+  });
 
-const isMobile = computed(() => {
-  return store.getters['setting/isMobile'];
-});
-
-onBeforeMount(() => {
-  getTableCount();
-  getIndexCount();
-  getRelationshipCount();
-  getJcCount();
-  getTagsCount();
-  getDimCount();
-  getInterfaceCount();
-  getTotalCount();
-  getProjectRequirementCount();
-  getTop10ApiCount();
-});
+  onBeforeMount(() => {
+    getTableCount();
+    getIndexCount();
+    getRelationshipCount();
+    getJcCount();
+    getTagsCount();
+    getDimCount();
+    getInterfaceCount();
+    getTotalCount();
+    getProjectRequirementCount();
+    getTop10ApiCount();
+  });
 </script>
 
 <style lang="scss" scoped>
-.index-conntainer {
-  width: $base-width;
-  .content {
-    margin: 16px 0;
-    .tit {
-      position: relative;
-      padding-left: 15px;
-      font-weight: 500;
-      font-size: 18px;
-      line-height: 25px;
-      margin-bottom: 30px;
-      color: #4763e4;
-      &::before {
-        position: absolute;
-        top: 3px;
-        left: 0px;
-        content: '';
-        width: 3px;
-        height: 16px;
-        background-color: #4763e4;
+  .index-conntainer {
+    width: $base-width;
+    .content {
+      margin: 16px 0;
+      .tit {
+        position: relative;
+        padding-left: 15px;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25px;
+        margin-bottom: 30px;
+        color: #4763e4;
+        &::before {
+          position: absolute;
+          top: 3px;
+          left: 0px;
+          content: '';
+          width: 3px;
+          height: 16px;
+          background-color: #4763e4;
+        }
       }
-    }
 
-    .count-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .item {
+      .count-box {
         display: flex;
-        flex-direction: column;
-        text-align: center;
-        .label {
-          padding: 10px 0;
-          font-size: $base-font-size-big;
-        }
-        .count {
-          font-size: $base-font-size-max;
-          font-weight: bolder;
-          color: $base-color-primary;
-          &.error {
-            color: var(--el-color-danger);
-          }
-          &.success {
-            color: var(--el-color-success);
-          }
-        }
-      }
-    }
-    .title {
-      margin: 0;
-    }
-    .skill-title {
-      padding: 10px 0;
-      font-weight: 500;
-    }
-    .card {
-      margin-bottom: 16px;
-      &-body {
-        .modelitem {
-          position: relative;
-          height: auto;
-          aspect-ratio: 2.42;
-          text-align: center;
-          border-radius: 2px;
-          .num {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            font-weight: 600;
-            font-size: 30px;
-            color: #fff;
-          }
-          .percent {
-            position: absolute;
-            right: 16px;
-            bottom: 10px;
-            font-size: 20px;
-          }
-        }
-        .split1 {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .split {
-          width: 1px;
-          height: 40px;
-          background-color: #6d6d76;
-        }
-        .overviewitem {
+        align-items: center;
+        justify-content: space-between;
+        .item {
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          margin-bottom: 20px;
-          .text {
-            font-size: 16px;
-            color: #aaaaaa;
-            margin-bottom: 20px;
+          text-align: center;
+          .label {
+            padding: 10px 0;
+            font-size: $base-font-size-big;
           }
-          .value {
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            color: #aaaaaa;
-            span {
-              font-size: 32px;
-              line-height: 45px;
-              color: #8da2fb;
+          .count {
+            font-size: $base-font-size-max;
+            font-weight: bolder;
+            color: $base-color-primary;
+            &.error {
+              color: var(--el-color-danger);
+            }
+            &.success {
+              color: var(--el-color-success);
             }
           }
         }
       }
-    }
-    .modelrow {
-      margin-bottom: 50px;
+      .title {
+        margin: 0;
+      }
+      .skill-title {
+        padding: 10px 0;
+        font-weight: 500;
+      }
+      .card {
+        margin-bottom: 16px;
+        &-body {
+          .modelitem {
+            position: relative;
+            height: auto;
+            aspect-ratio: 2.42;
+            text-align: center;
+            border-radius: 2px;
+            .num {
+              position: absolute;
+              right: 10px;
+              top: 10px;
+              font-weight: 600;
+              font-size: 30px;
+              color: #fff;
+            }
+            .percent {
+              position: absolute;
+              right: 16px;
+              bottom: 10px;
+              font-size: 20px;
+            }
+          }
+          .split1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .split {
+            width: 1px;
+            height: 40px;
+            background-color: #6d6d76;
+          }
+          .overviewitem {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            .text {
+              font-size: 16px;
+              color: #aaaaaa;
+              margin-bottom: 20px;
+            }
+            .value {
+              font-size: 16px;
+              display: flex;
+              align-items: center;
+              color: #aaaaaa;
+              span {
+                font-size: 32px;
+                line-height: 45px;
+                color: #8da2fb;
+              }
+            }
+          }
+        }
+      }
+      .modelrow {
+        margin-bottom: 50px;
+      }
     }
   }
-}
 </style>
