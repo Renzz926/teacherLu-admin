@@ -3,7 +3,6 @@
  * and vue3 https://github.com/bytedance/IconPark/tree/master/packages/vue-next
  * element-plus icon: https://element-plus.gitee.io/#/zh-CN/component/icon
  * @description 图标库按需注册
- * @author hu-snail
  * @example <icon-user theme="outline" size="16" fill="#999" />
  * @example <el-icon :size="20"> <edit /> </el-icon>
  */

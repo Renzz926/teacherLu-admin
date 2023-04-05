@@ -97,8 +97,8 @@ export const asyncRoutes = [
     meta: { title: '元数据管理', icon: 'icon-adjacent-item' },
     children: [
       {
-        path: '/dataManager/table',
-        name: 'table',
+        path: '/table',
+        name: 'Table',
         component: () => import('@/views/dataManager/table.vue'),
         meta: {
           title: 'dw信息',
@@ -106,7 +106,7 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/dataManager/gb4754',
+        path: '/gb4754',
         name: 'gb4754',
         component: () => import('@/views/dataManager/gb4754.vue'),
         meta: {
@@ -115,7 +115,7 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/dataManager/education_code',
+        path: '/education_code',
         name: 'education_code',
         component: () => import('@/views/dataManager/education_code.vue'),
         meta: {
@@ -124,7 +124,7 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/dataManager/social_insurance_code',
+        path: '/social_insurance_code',
         name: 'social_insurance_code',
         component: () => import('@/views/dataManager/social_insurance_code.vue'),
         meta: {
@@ -133,7 +133,7 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/dataManager/region',
+        path: '/region',
         name: 'region',
         component: () => import('@/views/dataManager/region.vue'),
         meta: {
@@ -142,7 +142,7 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/dataManager/alias',
+        path: '/alias',
         name: 'alias',
         component: () => import('@/views/dataManager/alias.vue'),
         meta: {

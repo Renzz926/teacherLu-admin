@@ -1,6 +1,5 @@
 /**
  * @description 项目英语配置
- * @author hu-snail 1217437592@qq.com
  */
 export default {
   route: {

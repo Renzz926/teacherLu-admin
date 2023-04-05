@@ -1,5 +1,4 @@
 /**
- * @author hujiangjun 1217437592@qq.com
  * @description 路由控制
  */
 import router from '@/router';
