@@ -35,7 +35,7 @@ const handleCode = (code, msg) => {
         });
       break;
     case noPermissionCode:
-      router.push({ path: '/401' }).catch(() => {});
+      router.push({ path: '/login' }).catch(() => {});
       break;
     default:
       console.log('---');

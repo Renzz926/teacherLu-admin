@@ -44,14 +44,12 @@
       <el-button
         type="primary"
         size="medium"
-        icon="el-icon-search"
+        :icon="Search"
         @click="searchClick"
         v-on:keyup.enter="enterSearch"
         >查询</el-button
       >
-      <el-button size="medium" type="success" icon="el-icon-folder-add" @click="addClick"
-        >新建</el-button
-      >
+      <el-button size="medium" type="success" :icon="Plus" @click="addClick">新建</el-button>
     </div>
     <div style="margin: 0 30px 0 15px">
       <el-table border :data="state.configList" stripe>
@@ -84,29 +82,15 @@
       </el-table>
       <el-pagination
         style="margin-top: 20px; float: right"
-        v-if="state.configList.length > 0 || current > 1"
-        @current-change="handleCurrentChange"
-        :current-page="current"
-        :page-size="select"
-        :pager-count="15"
+        v-model:current-page="current"
+        v-model:page-size="select"
+        :page-sizes="[15, 25, 35, 50]"
+        :background="background"
+        layout="total, sizes, prev, pager, next jumper"
         :total="total"
-        layout="total, prev, pager, next, jumper"
-      >
-      </el-pagination>
-      <el-select
-        v-model="select"
-        placeholder="请选择"
-        style="margin-top: 20px; width: 90px; float: right"
-        @change="pageNumChange(select)"
-      >
-        <el-option
-          v-for="item in pageNum"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </div>
 
     <!-- 弹窗 -->
@@ -137,7 +121,7 @@
 <script setup>
   import { tagsApi } from '@/api/tags';
   import { ref, reactive, onMounted, getCurrentInstance } from 'vue';
-  import { Delete, Edit } from '@element-plus/icons-vue';
+  import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue';
   import { useStore } from 'vuex';
   const store = useStore();
   const { ctx } = getCurrentInstance();
@@ -168,14 +152,10 @@
       standardName: '',
       sgName: '',
     },
-    pageNum: [
-      { value: '15', label: '10/页' },
-      { value: '25', label: '20/页' },
-      { value: '35', label: '30/页' },
-      { value: '50', label: '40/页' },
-    ],
   });
-
+  const handleSizeChange = (val) => {
+    console.log(`${val} items per page`);
+  };
   onMounted(() => {
     username.value = store.getters['user/username'];
     searchClick();
@@ -188,25 +168,25 @@
       })
       .catch((err) => {});
   };
-  const dateClick = () => {
-    tagsApi({
-      script: 'dim/eighbour/alias/list',
-      id: dimId.value,
-      ds: ds.value,
-    })
-      .then((res) => {
-        state.resultList = res;
-      })
-      .catch((err) => {});
-  };
-  const showResult = (row) => {
-    dimId.value = row.id;
-    tagsApi({ script: 'dim/eighbour/alias/list', id: dimId.value })
-      .then((res) => {
-        state.resultList = res;
-      })
-      .catch((err) => {});
-  };
+  // const dateClick = () => {
+  //   tagsApi({
+  //     script: 'dim/eighbour/alias/list',
+  //     id: dimId.value,
+  //     ds: ds.value,
+  //   })
+  //     .then((res) => {
+  //       state.resultList = res;
+  //     })
+  //     .catch((err) => {});
+  // };
+  // const showResult = (row) => {
+  //   dimId.value = row.id;
+  //   tagsApi({ script: 'dim/eighbour/alias/list', id: dimId.value })
+  //     .then((res) => {
+  //       state.resultList = res;
+  //     })
+  //     .catch((err) => {});
+  // };
   const configEdit = (row) => {
     addConfigVisible.value = true;
     state.configForm = row;

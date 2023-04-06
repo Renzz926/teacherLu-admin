@@ -333,14 +333,6 @@
           fd = '';
         }
       },
-      //回车搜索
-      enterSearch() {
-        document.onkeyup = (e) => {
-          if (e.keyCode === 13) {
-            this.searchClick();
-          }
-        };
-      },
     },
   };
 </script>

@@ -344,13 +344,13 @@
           if (valid) {
             if (this.form.type != null) {
               updateGb4754(this.form).then((response) => {
-                this.msgSuccess('修改成功');
+                msgSuccess('修改成功');
                 this.open = false;
                 this.getList();
               });
             } else {
               addGb4754(this.form).then((response) => {
-                this.msgSuccess('新增成功');
+                msgSuccess('新增成功');
                 this.open = false;
                 this.getList();
               });
@@ -371,7 +371,7 @@
           })
           .then(() => {
             this.getList();
-            this.msgSuccess('删除成功');
+            msgSuccess('删除成功');
           })
           .catch(() => {});
       },
